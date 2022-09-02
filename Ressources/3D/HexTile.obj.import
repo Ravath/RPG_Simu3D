@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/HexTile.obj-d49c1b35f47b8f649953c3e2e41d05e0.mesh"
+
+[deps]
+
+files=[ "res://.import/HexTile.obj-d49c1b35f47b8f649953c3e2e41d05e0.mesh" ]
+
+source_file="res://Ressources/3D/HexTile.obj"
+dest_files=[ "res://.import/HexTile.obj-d49c1b35f47b8f649953c3e2e41d05e0.mesh", "res://.import/HexTile.obj-d49c1b35f47b8f649953c3e2e41d05e0.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
