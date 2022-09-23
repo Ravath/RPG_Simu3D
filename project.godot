@@ -12,12 +12,12 @@ _global_script_classes=[ {
 "base": "GDScript",
 "class": "MapAction",
 "language": "GDScript",
-"path": "res://MapAction.gd"
+"path": "res://Scripts/MapAction.gd"
 }, {
 "base": "GDScript",
 "class": "MapData",
 "language": "GDScript",
-"path": "res://MapData.gd"
+"path": "res://Scripts/MapData.gd"
 } ]
 _global_script_class_icons={
 "MapAction": "",

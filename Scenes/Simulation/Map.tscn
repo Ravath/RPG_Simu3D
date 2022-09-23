@@ -103,13 +103,15 @@ text = "Down"
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -102.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="Panel"]
-margin_right = 40.0
-margin_bottom = 14.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "display"
 [connection signal="input_event" from="TileBuilder_Square/Click_detection" to="TileBuilder_Square" method="_on_Area_input_event"]
 [connection signal="pressed" from="VBoxContainer/Button_select" to="." method="_on_Button_select_pressed"]
 [connection signal="pressed" from="VBoxContainer/Button_upTool" to="." method="_on_Button_upTool_pressed"]
