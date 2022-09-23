@@ -7,6 +7,7 @@ var Y:int
 var MAX_ALTITUDE:int # MAX_ALTITUDE
 var grid = [] # int[][]
 
+signal updated_tile_height(coordinate2D)
 var update = false
 var updated_tiles = []
 
@@ -36,6 +37,7 @@ func set_height(x:int, y:int, new_alt:int):
 	
 	# update value and raise flag
 	grid[x][y] = new_alt
+	emit_signal("updated_tile_height", Vector2(x,y))
 	update = true
 	updated_tiles.append(Vector2(x,y))
 
