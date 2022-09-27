@@ -13,11 +13,12 @@ signal tile_selected(coordinate2D)
 func _ready():
 	pass
 
-func set_map(map):
-	self.map = map #MapData
-	update()
+func set_map(new_map):
+	self.map = new_map #MapData
+	update_grid()
+	$CharacterDisplayer.update_characters(map)
 	
-func update():
+func update_grid():
 	# instantiate and positionate the tiles
 	self.multimesh.instance_count = map.X * map.Y * map.MAX_ALTITUDE
 
@@ -46,6 +47,9 @@ func update_tile_at(coordinate2D):
 		self.multimesh.set_instance_transform(v.x*map.MAX_ALTITUDE*map.Y + v.y*map.MAX_ALTITUDE + i, position)
 	# update click_manager
 	update_click_manager_at(v.x, v.y, map.grid[v.x][v.y])
+
+	#Update Characters
+	$CharacterDisplayer.update_characters(map)
 
 func update_click_manager_at(x, y, z):
 	# update the CollisionShape height and position used to detect clicks at the given coordinates

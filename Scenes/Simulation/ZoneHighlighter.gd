@@ -22,6 +22,6 @@ func set_highlight(map, zone):
 	
 	for i in zone.size():
 		var position = Transform()
-		var alt = map.grid[zone[i].x][zone[i].y]
+		var alt = map.get_height(zone[i])
 		position = position.translated(Vector3(zone[i].x * W, (alt+0.5)*H + epsilon, zone[i].y * W))
 		self.multimesh.set_instance_transform(i, position)

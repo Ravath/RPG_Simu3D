@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scenes/Simulation/Camera.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Simulation/TileBuilder_Square.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Ressources/3D/Tile.obj" type="ArrayMesh" id=4]
 [ext_resource path="res://Ressources/3D/Selector.obj" type="ArrayMesh" id=5]
 [ext_resource path="res://Scenes/Simulation/ZoneHighlighter.gd" type="Script" id=6]
+[ext_resource path="res://Scenes/Simulation/CharacterDisplayer.gd" type="Script" id=7]
 
 [sub_resource type="MultiMesh" id=1]
 transform_format = 1
@@ -54,22 +55,33 @@ nodes/fragment/connections = PoolIntArray( 2, 0, 0, 0 )
 [sub_resource type="ShaderMaterial" id=6]
 shader = SubResource( 5 )
 
-[sub_resource type="SpatialMaterial" id=9]
+[sub_resource type="SpatialMaterial" id=7]
 flags_transparent = true
 albedo_color = Color( 0.745098, 0.388235, 0.196078, 0.572549 )
 
-[sub_resource type="PlaneMesh" id=7]
-material = SubResource( 9 )
+[sub_resource type="PlaneMesh" id=8]
+material = SubResource( 7 )
 
-[sub_resource type="MultiMesh" id=8]
+[sub_resource type="MultiMesh" id=9]
 transform_format = 1
-mesh = SubResource( 7 )
+mesh = SubResource( 8 )
 
-[sub_resource type="ProceduralSky" id=11]
+[sub_resource type="SpatialMaterial" id=12]
+albedo_color = Color( 0.313726, 0.45098, 0.682353, 1 )
 
-[sub_resource type="Environment" id=10]
+[sub_resource type="CylinderMesh" id=13]
+material = SubResource( 12 )
+radial_segments = 24
+
+[sub_resource type="MultiMesh" id=14]
+transform_format = 1
+mesh = SubResource( 13 )
+
+[sub_resource type="ProceduralSky" id=10]
+
+[sub_resource type="Environment" id=11]
 background_mode = 3
-background_sky = SubResource( 11 )
+background_sky = SubResource( 10 )
 
 [node name="Map" type="Spatial"]
 script = ExtResource( 3 )
@@ -92,8 +104,12 @@ mesh = ExtResource( 5 )
 material/0 = SubResource( 6 )
 
 [node name="ZoneHighlighter" type="MultiMeshInstance" parent="TileBuilder_Square"]
-multimesh = SubResource( 8 )
+multimesh = SubResource( 9 )
 script = ExtResource( 6 )
+
+[node name="CharacterDisplayer" type="MultiMeshInstance" parent="TileBuilder_Square"]
+multimesh = SubResource( 14 )
+script = ExtResource( 7 )
 
 [node name="Camera" parent="." instance=ExtResource( 1 )]
 
@@ -134,9 +150,12 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 text = "display"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 10 )
+environment = SubResource( 11 )
 [connection signal="tile_selected" from="TileBuilder_Square" to="." method="_on_tile_selected"]
 [connection signal="input_event" from="TileBuilder_Square/Click_detection" to="TileBuilder_Square" method="_on_Area_input_event"]
 [connection signal="pressed" from="VBoxContainer/Button_select" to="." method="_on_Button_select_pressed"]

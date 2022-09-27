@@ -7,6 +7,8 @@ var Y:int
 var MAX_ALTITUDE:int # MAX_ALTITUDE
 var grid = [] # int[][]
 
+var characters = []
+
 signal updated_tile_height(coordinate2D)
 var update = false
 var updated_tiles = []
@@ -41,6 +43,9 @@ func set_height(x:int, y:int, new_alt:int):
 	update = true
 	updated_tiles.append(Vector2(x,y))
 
+func get_height(var pos):
+	return grid[pos.x][pos.y]
+
 func build_grid(builder_function):
 	# build a map with random altitudes
 	for x in range(X):
@@ -58,10 +63,10 @@ func builder_room(x:int, y:int):
 		return MAX_ALTITUDE
 	return 0
 
-func builder_flatrand(x:int, y:int):
+func builder_flatrand(_x:int, _y:int):
 	return randi() % MAX_ALTITUDE
 
-func builder_dicerand(x:int, y:int):
+func builder_dicerand(_x:int, _y:int):
 	var alt = (randi() % MAX_ALTITUDE) + (randi() % MAX_ALTITUDE) + (randi() % MAX_ALTITUDE)
 	return alt / 3
 
@@ -73,3 +78,13 @@ func builder_exporand(_x:int, _y:int):
 
 func builder_gradiant(x:int, y:int):
 	return int(float(x+y) / 2 / max(X,Y) * MAX_ALTITUDE)
+
+func add_character(newc : Character):
+	characters.append(newc)
+
+func get_selected_items(position):
+	var items = []
+	for c in characters:
+		if c.position == position:
+			items.append(c)
+	return items
