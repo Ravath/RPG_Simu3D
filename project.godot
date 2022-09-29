@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "MapData",
 "language": "GDScript",
 "path": "res://Scripts/MapData.gd"
+}, {
+"base": "Node",
+"class": "nav_node",
+"language": "GDScript",
+"path": "res://Scripts/Nav_Node.gd"
 } ]
 _global_script_class_icons={
 "Character": "",
 "MapAction": "",
-"MapData": ""
+"MapData": "",
+"nav_node": ""
 }
 
 [application]

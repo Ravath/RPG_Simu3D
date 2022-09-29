@@ -36,18 +36,8 @@ func get_move_points():
 func get_name():
 	return "Hero"
 
-class nav_node :
-	# A class used for pathfinding algorithms
-	var position : Vector2
-	var previous : Vector2
-	var move_cost : float # total move cost from the path start
-	func _init(from, to, cost):
-		self.position = to
-		self.previous = from
-		self.move_cost = cost
-
 func find_walkable(map):
-	var to_search = [nav_node.new(position, position, 0)]
+	var to_search = [nav_node.new(null, position, 0)]
 	var walkable = [to_search[0]]
 	var searched = []
 #	var neighbours = [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
@@ -68,21 +58,25 @@ func find_walkable(map):
 				continue
 			
 			# check if already searched
-			var fastest = null
+			var previous = null
 			for sn in walkable:
 				if sn.position == n :
-					fastest = sn
+					previous = sn
 					break
 			
 			# if convenient, use it
 			var total_cost = current.move_cost + cost
 			if total_cost <= get_move_points() :
-				if fastest and total_cost < fastest.move_cost :
-					print("fastest way found, but not used")
-				elif not fastest :
+				if previous and total_cost < previous.move_cost :
+					# use the fastest
+					previous.previous = current
+					previous.position = n
+					previous.move_cost = total_cost
+				elif not previous :
 					# set walkable
-					var w = nav_node.new(current.position, n, total_cost)
+					var w = nav_node.new(current, n, total_cost)
 					to_search.append(w)
 					walkable.append(w)
 
 	return walkable
+

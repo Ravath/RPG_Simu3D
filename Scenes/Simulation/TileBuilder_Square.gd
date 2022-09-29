@@ -8,6 +8,7 @@ var map	# the map to display
 var click_managers = []	# the list of tile click detectors (one per tile)
 
 signal tile_selected(coordinate2D)
+signal mouse_tile_event(event, coordinate2D)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -49,8 +50,11 @@ func update_tile_at(coordinate2D):
 	update_click_manager_at(v.x, v.y, map.grid[v.x][v.y])
 
 	#Update Characters
-	$CharacterDisplayer.update_characters(map)
+	update_characters()
 
+func update_characters():
+	$CharacterDisplayer.update_characters(map)
+	
 func update_click_manager_at(x, y, z):
 	# update the CollisionShape height and position used to detect clicks at the given coordinates
 	var col = self.click_managers[x * map.Y + y]
@@ -62,12 +66,15 @@ func update_click_manager_at(x, y, z):
 func _on_Area_input_event(_camera, event, click_position, click_normal, _shape_idx):
 	# when a tile is clicked_on, deduce the grid coordinates
 	# then execute the current tool and selection process
+	var gp = pos_to_grid(click_position - 0.05 * click_normal)
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed :
-		var gp = pos_to_grid(click_position - 0.05 * click_normal)
+#		var gp = pos_to_grid(click_position - 0.05 * click_normal)
 		
 		emit_signal("tile_selected", gp)
 		
 		set_selection_cursor(gp)
+	else :
+		emit_signal("mouse_tile_event", event, gp)
 
 func pos_to_grid(position) :
 	# convert a global position2D into a grid coordinate2D
@@ -100,3 +107,9 @@ func highlight_zone(zone):
 	# draw a highlighting for the given tiles
 	# zone : Vector2[] of the tiles to highlight
 	$ZoneHighlighter.set_highlight(map, zone)
+
+
+func draw_line(start_node) :
+	# draw a pathline starting from the given navigation node nav_node
+	# zone : nav_node of the path to show
+	$ArrowDrawer.draw_line(map, start_node)
