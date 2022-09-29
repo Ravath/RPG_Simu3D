@@ -1,10 +1,12 @@
 extends Position3D
 
-var CAMERA_SPEED = 0.1
+var CAMERA_SPEED = 0.2
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Camera.transform = $Camera.transform.looking_at(self.transform.origin, Vector3.UP)
+	# TODO maybe fix this :
+	# code line removed because the current code is not robust to this initial rotation for some reason
+#	$Camera.transform = $Camera.transform.looking_at(self.transform.origin, Vector3.UP)
 	pass
 
 

@@ -4,7 +4,7 @@ var map	# the map to display
 var current_tool = null	# current tool used on click (null for selection only)
 var selected_character = null # the currently selected Character
 var walkable # walkable zone of the selected character
-var current_coordinate : Vector2 # last known Coordinate of the mouse
+var current_coordinate : Vector2 # last known Grid Coordinates of the mouse
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,14 +26,14 @@ func _ready():
 	map.add_character(c2)
 
 	# give map to display module
-	$TileBuilder_Square.set_map(map)
+	$Display3D.set_map(map)
 	map.connect("updated_tile_height", self, "_on_updated_tile_height")
 
 func _on_updated_tile_height(coordinate2D):
 	# when the map has been changed, update the 3D model
-	$TileBuilder_Square.update_tile_at(coordinate2D)
+	$Display3D.update_tile_at(coordinate2D)
 
-func _on_tile_selected(coordinate):
+func Tile_Left_Click(coordinate):
 	
 	# selection process
 	var display = "Height : "
@@ -57,15 +57,36 @@ func _on_tile_selected(coordinate):
 	if selected_character:
 		update_walkable_zone(selected_character)
 	else :
-		$TileBuilder_Square.highlight_zone(null)
-		$TileBuilder_Square.draw_line(null)
+		$Display3D.highlight_zone(null)
+		$Display3D.draw_line(null)
 
+func Tile_Right_Click(coordinate2D):
+	if selected_character and walkable :
+		# find navigation node and go if any
+		var end_node = find_nav_node(coordinate2D)
+		if end_node:
+			selected_character.position = end_node.position
+			$Display3D.update_characters()
+			# redo the selection stuff
+			Tile_Left_Click(coordinate2D)
+#			update_walkable_zone(selected_character)
+			$Display3D.set_selection_cursor(coordinate2D)
+	
+func Tile_Mouse_Enters(coordinate2D):
+	$Coordinate.set_text(str(coordinate2D))
+	
+	# if a character is selected, display the path up to the current tile
+	if selected_character and walkable :
+		var end_node = find_nav_node(coordinate2D)
+		if end_node:
+			$Display3D.draw_line(end_node)
+	
 func update_walkable_zone(character) :
 	walkable = character.find_walkable(map)
 	var zone = []
-	for wz in walkable:
-		zone.append(wz.position)
-	$TileBuilder_Square.highlight_zone(zone)
+	for node in walkable:
+		zone.append(node.position)
+	$Display3D.highlight_zone(zone)
 	
 func find_nav_node(coordinate2D):
 	# Find the nav_node in the walkable zone that arrives at the given coordinates
@@ -78,29 +99,22 @@ func find_nav_node(coordinate2D):
 
 func _on_TileBuilder_Square_mouse_tile_event(event, coordinate2D):
 	
-	#move the character on RIGHT_CLICK
-	if event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed \
-	and selected_character and walkable :
-		# find navigation node and go if any
-		var end_node = find_nav_node(coordinate2D)
-		if end_node:
-			selected_character.position = end_node.position
-			$TileBuilder_Square.update_characters()
-			# redo the selection stuff
-			_on_tile_selected(coordinate2D)
-#			update_walkable_zone(selected_character)
-			$TileBuilder_Square.set_selection_cursor(coordinate2D)
+	# Do mouse action on LEFT_CLICK
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed :
+		
+		Tile_Left_Click(coordinate2D)
+		$Display3D.set_selection_cursor(coordinate2D)
+		
+	# Move the selected character on RIGHT_CLICK
+	elif event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed :
+		
+		Tile_Right_Click(coordinate2D)
 	
-	# update the current tile under the mouse
+	# update the DisplayPanels with the tile info of the one under the mouse
 	if current_coordinate != coordinate2D:
 		current_coordinate = coordinate2D
-		$Coordinate.set_text(str(coordinate2D))
 		
-		# if a character is selected, display the path up to the current tile
-		if selected_character and walkable :
-			var end_node = find_nav_node(coordinate2D)
-			if end_node:
-				$TileBuilder_Square.draw_line(end_node)
+		Tile_Mouse_Enters(coordinate2D)
 
 func _on_Button_select_pressed():
 	current_tool = null

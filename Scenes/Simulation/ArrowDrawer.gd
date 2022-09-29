@@ -2,13 +2,16 @@ extends MultiMeshInstance
 
 
 # The tile dimensions
-const W = 2
-const H = 0.5
-const epsilon = H/2
+var W
+var H
+var epsilon
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	W = get_parent().TILE_WIDTH
+	H = get_parent().TILE_HEIGHT
+	epsilon = H/2
 	pass # Replace with function body.
 
 
@@ -26,7 +29,6 @@ func draw_line(map, start_node) :
 	while c :
 		count += 1
 		c = c.previous
-		# TODO add 1 each time there is an elevation
 	
 	# instantiate and positionate the highlight
 	self.multimesh.instance_count = count
@@ -38,7 +40,6 @@ func draw_line(map, start_node) :
 		var position = Transform()
 		var alt = map.get_height(c.position)
 		position.origin = Vector3(c.position.x * W, (alt+0.5)*H + epsilon, c.position.y * W)
-#		position = position.translated(Vector3(c.position.x * W, (alt+0.5)*H + epsilon, c.position.y * W))
 		
 		# do rotation
 		if c.previous :

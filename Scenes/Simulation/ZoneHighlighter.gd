@@ -2,13 +2,15 @@ extends MultiMeshInstance
 
 
 # The tile dimensions
-const W = 2
-const H = 0.5
+var W 
+var H
 # over-elevation for not placing the highlight in the tile
 const epsilon = 0.001
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	W = get_parent().TILE_WIDTH
+	H = get_parent().TILE_HEIGHT
 	pass
 
 func set_highlight(map, zone):

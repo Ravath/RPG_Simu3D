@@ -2,13 +2,15 @@ extends MultiMeshInstance
 
 
 # The tile dimensions
-const W = 2
-const H = 0.5
+var W
+var H
 const C_H = 2 # Character height
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	W = get_parent().TILE_WIDTH
+	H = get_parent().TILE_HEIGHT
 	pass # Replace with function body.
 
 func update_characters(var map):
