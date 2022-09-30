@@ -8,7 +8,7 @@ var current_coordinate : Vector2 # last known Grid Coordinates of the mouse
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	map = $DataControl/MapData
+	map = $SceneData/MapData
 
 	# give map to display module
 	$Display3D.set_map(map)

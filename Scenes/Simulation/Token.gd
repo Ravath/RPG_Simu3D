@@ -13,7 +13,7 @@ export(bool) var can_walk = false
 export(String, "DD3.5") var system
 var character # Character Sheet
 
-signal moved_at(coord2D)
+signal moved_at(nav_end) # nav_end : nav_node of the track, starting at the end
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -34,7 +34,7 @@ func is_in(coordinate2D : Vector2) :
 
 func go_to(coord : nav_node) :
 	position = coord.position
-	emit_signal("moved_at", position)
+	emit_signal("moved_at", coord)
 
 func can_go(map, fs:Vector2, ts:Vector2):
 #	map as MapData
@@ -56,6 +56,7 @@ func can_go(map, fs:Vector2, ts:Vector2):
 	return -1
 
 func find_walkable(map):
+	# Computes the walkable zone for this token
 	var to_search = [nav_node.new(null, position, 0)]
 	var walkable = [to_search[0]]
 	var searched = []

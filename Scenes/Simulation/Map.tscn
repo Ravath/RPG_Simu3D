@@ -11,7 +11,7 @@
 [ext_resource path="res://Scenes/Simulation/MapData.gd" type="Script" id=10]
 [ext_resource path="res://Scenes/Simulation/Token.gd" type="Script" id=11]
 [ext_resource path="res://Scenes/Simulation/TokenDisplayer.gd" type="Script" id=12]
-[ext_resource path="res://Scenes/Simulation/DataControl.gd" type="Script" id=13]
+[ext_resource path="res://Scenes/Simulation/SceneData.gd" type="Script" id=13]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.894118, 0.0705882, 0.0705882, 1 )
@@ -79,30 +79,30 @@ material = SubResource( 9 )
 transform_format = 1
 mesh = SubResource( 10 )
 
-[sub_resource type="CapsuleMesh" id=15]
+[sub_resource type="CapsuleMesh" id=12]
 radius = 0.1
 radial_segments = 12
 rings = 4
 
-[sub_resource type="MultiMesh" id=16]
+[sub_resource type="MultiMesh" id=13]
 transform_format = 1
-mesh = SubResource( 15 )
+mesh = SubResource( 12 )
 
-[sub_resource type="ProceduralSky" id=17]
+[sub_resource type="ProceduralSky" id=14]
 
-[sub_resource type="Environment" id=18]
+[sub_resource type="Environment" id=15]
 background_mode = 3
-background_sky = SubResource( 17 )
+background_sky = SubResource( 14 )
 
 [node name="GameController" type="Spatial"]
 script = ExtResource( 3 )
 
-[node name="DataControl" type="Node" parent="."]
+[node name="SceneData" type="Node" parent="."]
 script = ExtResource( 13 )
 
-[node name="Tokens" type="Node" parent="DataControl"]
+[node name="Tokens" type="Node" parent="SceneData"]
 
-[node name="Token" type="Spatial" parent="DataControl/Tokens"]
+[node name="Token" type="Spatial" parent="SceneData/Tokens"]
 script = ExtResource( 11 )
 displayed_name = "Hero"
 position = Vector2( 5, 5 )
@@ -110,8 +110,9 @@ size = Vector3( 1, 1, 0.25 )
 model3D = SubResource( 2 )
 can_walk = true
 
-[node name="MapData" type="Node" parent="DataControl"]
+[node name="MapData" type="Node" parent="SceneData"]
 script = ExtResource( 10 )
+generation = "builder_exporand"
 
 [node name="Camera" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 4, 14 )
@@ -139,7 +140,7 @@ multimesh = SubResource( 11 )
 script = ExtResource( 6 )
 
 [node name="ArrowDrawer" type="MultiMeshInstance" parent="Display3D"]
-multimesh = SubResource( 16 )
+multimesh = SubResource( 13 )
 script = ExtResource( 8 )
 
 [node name="TokenDisplayer" type="Spatial" parent="Display3D"]
@@ -198,7 +199,7 @@ __meta__ = {
 }
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 18 )
+environment = SubResource( 15 )
 [connection signal="mouse_tile_event" from="Display3D/TileBuilder_Square" to="." method="_on_TileBuilder_Square_mouse_tile_event"]
 [connection signal="input_event" from="Display3D/TileBuilder_Square/Click_detection" to="Display3D/TileBuilder_Square" method="_on_Area_input_event"]
 [connection signal="pressed" from="VBoxContainer/Button_select" to="." method="_on_Button_select_pressed"]
