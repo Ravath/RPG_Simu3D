@@ -8,22 +8,7 @@ var current_coordinate : Vector2 # last known Grid Coordinates of the mouse
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# TODO this is debug
-	map = MapData.new(10,10,5)
-#	map.build_grid(funcref(map, "builder_room"))
-	map.build_grid(funcref(map, "builder_ruins"))
-#	map.build_grid(funcref(map, "builder_flatrand"))
-#	map.build_grid(funcref(map, "builder_dicerand"))
-#	map.build_grid(funcref(map, "builder_exporand"))
-#	map.build_grid(funcref(map, "builder_gradiant"))
-	
-	# add character
-	var c1 = Character.new()
-	var c2 = Character.new()
-	c1.position = Vector2(1,1)
-	c2.position = Vector2(6,8)
-	map.add_character(c1)
-	map.add_character(c2)
+	map = $DataControl/MapData
 
 	# give map to display module
 	$Display3D.set_map(map)
@@ -38,14 +23,12 @@ func Tile_Left_Click(coordinate):
 	# selection process
 	var display = "Height : "
 	display = display + str(map.get_height(coordinate))
-	var misc = map.get_selected_items(coordinate)
+	var misc = map.get_tokens_at(coordinate)
 	var found_character
-	for item in misc :
-		if item is Character:
-			display = display + "\nCharacter : " + item.get_name()
-			found_character = item
-		else :
-			print(str(misc))
+	for token in misc :
+		display = display + "\n" + token.displayed_name
+		if token.can_walk :
+			found_character = token
 	selected_character = found_character
 	$Panel/Label.set_text(display)
 	
@@ -65,8 +48,8 @@ func Tile_Right_Click(coordinate2D):
 		# find navigation node and go if any
 		var end_node = find_nav_node(coordinate2D)
 		if end_node:
-			selected_character.position = end_node.position
-			$Display3D.update_characters()
+			selected_character.go_to(end_node)
+			$Display3D.update_tokens()
 			# redo the selection stuff
 			Tile_Left_Click(coordinate2D)
 #			update_walkable_zone(selected_character)

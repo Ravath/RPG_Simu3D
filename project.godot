@@ -10,19 +10,14 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "GDScript",
-"class": "Character",
-"language": "GDScript",
-"path": "res://Scripts/Character.gd"
-}, {
-"base": "GDScript",
 "class": "MapAction",
 "language": "GDScript",
 "path": "res://Scripts/MapAction.gd"
 }, {
-"base": "GDScript",
-"class": "MapData",
+"base": "Spatial",
+"class": "Token",
 "language": "GDScript",
-"path": "res://Scripts/MapData.gd"
+"path": "res://Scenes/Simulation/Token.gd"
 }, {
 "base": "Node",
 "class": "nav_node",
@@ -30,9 +25,8 @@ _global_script_classes=[ {
 "path": "res://Scripts/Nav_Node.gd"
 } ]
 _global_script_class_icons={
-"Character": "",
 "MapAction": "",
-"MapData": "",
+"Token": "",
 "nav_node": ""
 }
 

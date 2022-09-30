@@ -1,15 +1,40 @@
-extends GDScript
+extends Spatial
 
-class_name Character
+class_name Token
 
-var position = Vector2() # grid position
+export(String) var displayed_name = "Character"
+export var position : Vector2
+export var size : Vector3 = Vector3(1,1,1)
+export(Mesh) var model3D
 
-func _init():
-	pass
+# TODO change to a mean to differenciate characters, items, and such
+export(bool) var can_walk = false
+
+export(String, "DD3.5") var system
+var character # Character Sheet
+
+signal moved_at(coord2D)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
+
+func get_move_points():
+	return 6
+
+func is_in(coordinate2D : Vector2) :
+	# check if the token is present at the given coordinates
+	if position == coordinate2D :
+		return true
+	if coordinate2D.x >= position.x and coordinate2D.y >= position.y \
+	and coordinate2D.x <= position.x + size.x - 1 \
+	and coordinate2D.y <= position.y + size.y - 1 :
+		return true
+	return false
+
+func go_to(coord : nav_node) :
+	position = coord.position
+	emit_signal("moved_at", position)
 
 func can_go(map, fs:Vector2, ts:Vector2):
 #	map as MapData
@@ -29,12 +54,6 @@ func can_go(map, fs:Vector2, ts:Vector2):
 	elif abs(fh-th) < 4 :
 		return 2 * diagonal
 	return -1
-
-func get_move_points():
-	return 6
-
-func get_name():
-	return "Hero"
 
 func find_walkable(map):
 	var to_search = [nav_node.new(null, position, 0)]
@@ -79,4 +98,3 @@ func find_walkable(map):
 					walkable.append(w)
 
 	return walkable
-

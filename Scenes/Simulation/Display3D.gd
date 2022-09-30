@@ -13,14 +13,16 @@ func _ready():
 func set_map(new_map):
 	self.map = new_map #MapData
 	$TileBuilder_Square.update_grid(map)
-	$CharacterDisplayer.update_characters(map)
+	
+	$TokenDisplayer.add_tokens(map)
 
 func update_tile_at(coordinate2D):
 	$TileBuilder_Square.update_tile_at(map, coordinate2D)
-	$CharacterDisplayer.update_characters(map)
+#	$TokenDisplayer.update_tokens(map)
 	
-func update_characters():
-	$CharacterDisplayer.update_characters(map)
+func update_tokens():
+#	$TokenDisplayer.update_tokens(map)
+	pass
 
 func set_selection_cursor(pos):
 	$Selector.transform.origin = Vector3(

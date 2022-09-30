@@ -1,27 +1,38 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Scenes/Simulation/Camera.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Simulation/TileBuilder_Square.gd" type="Script" id=2]
-[ext_resource path="res://Scenes/Simulation/Map.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/Simulation/GameController.gd" type="Script" id=3]
 [ext_resource path="res://Ressources/3D/Tile.obj" type="ArrayMesh" id=4]
 [ext_resource path="res://Ressources/3D/Selector.obj" type="ArrayMesh" id=5]
 [ext_resource path="res://Scenes/Simulation/ZoneHighlighter.gd" type="Script" id=6]
-[ext_resource path="res://Scenes/Simulation/CharacterDisplayer.gd" type="Script" id=7]
 [ext_resource path="res://Scenes/Simulation/ArrowDrawer.gd" type="Script" id=8]
 [ext_resource path="res://Scenes/Simulation/Display3D.gd" type="Script" id=9]
+[ext_resource path="res://Scenes/Simulation/MapData.gd" type="Script" id=10]
+[ext_resource path="res://Scenes/Simulation/Token.gd" type="Script" id=11]
+[ext_resource path="res://Scenes/Simulation/TokenDisplayer.gd" type="Script" id=12]
+[ext_resource path="res://Scenes/Simulation/DataControl.gd" type="Script" id=13]
 
-[sub_resource type="MultiMesh" id=1]
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.894118, 0.0705882, 0.0705882, 1 )
+
+[sub_resource type="CylinderMesh" id=2]
+material = SubResource( 1 )
+radial_segments = 16
+rings = 2
+
+[sub_resource type="MultiMesh" id=3]
 transform_format = 1
 mesh = ExtResource( 4 )
 
-[sub_resource type="BoxShape" id=2]
+[sub_resource type="BoxShape" id=4]
 
-[sub_resource type="VisualShaderNodeColorConstant" id=3]
+[sub_resource type="VisualShaderNodeColorConstant" id=5]
 constant = Color( 0.851563, 0.631006, 0.162994, 1 )
 
-[sub_resource type="VisualShaderNodeColorConstant" id=4]
+[sub_resource type="VisualShaderNodeColorConstant" id=6]
 
-[sub_resource type="VisualShader" id=5]
+[sub_resource type="VisualShader" id=7]
 code = "shader_type spatial;
 
 
@@ -48,54 +59,59 @@ void light() {
 "
 graph_offset = Vector2( -193, 130 )
 nodes/fragment/0/position = Vector2( 540, 160 )
-nodes/fragment/2/node = SubResource( 3 )
+nodes/fragment/2/node = SubResource( 5 )
 nodes/fragment/2/position = Vector2( 200, 180 )
-nodes/fragment/3/node = SubResource( 4 )
+nodes/fragment/3/node = SubResource( 6 )
 nodes/fragment/3/position = Vector2( 200, 300 )
 nodes/fragment/connections = PoolIntArray( 2, 0, 0, 0 )
 
-[sub_resource type="ShaderMaterial" id=6]
-shader = SubResource( 5 )
+[sub_resource type="ShaderMaterial" id=8]
+shader = SubResource( 7 )
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=9]
 flags_transparent = true
 albedo_color = Color( 0.745098, 0.388235, 0.196078, 0.572549 )
 
-[sub_resource type="PlaneMesh" id=8]
-material = SubResource( 7 )
+[sub_resource type="PlaneMesh" id=10]
+material = SubResource( 9 )
 
-[sub_resource type="MultiMesh" id=9]
+[sub_resource type="MultiMesh" id=11]
 transform_format = 1
-mesh = SubResource( 8 )
+mesh = SubResource( 10 )
 
-[sub_resource type="SpatialMaterial" id=10]
-albedo_color = Color( 0.313726, 0.45098, 0.682353, 1 )
-
-[sub_resource type="CylinderMesh" id=11]
-material = SubResource( 10 )
-radial_segments = 24
-
-[sub_resource type="MultiMesh" id=12]
-transform_format = 1
-mesh = SubResource( 11 )
-
-[sub_resource type="CapsuleMesh" id=13]
+[sub_resource type="CapsuleMesh" id=15]
 radius = 0.1
 radial_segments = 12
 rings = 4
 
-[sub_resource type="MultiMesh" id=14]
+[sub_resource type="MultiMesh" id=16]
 transform_format = 1
-mesh = SubResource( 13 )
+mesh = SubResource( 15 )
 
-[sub_resource type="ProceduralSky" id=15]
+[sub_resource type="ProceduralSky" id=17]
 
-[sub_resource type="Environment" id=16]
+[sub_resource type="Environment" id=18]
 background_mode = 3
-background_sky = SubResource( 15 )
+background_sky = SubResource( 17 )
 
-[node name="Map" type="Spatial"]
+[node name="GameController" type="Spatial"]
 script = ExtResource( 3 )
+
+[node name="DataControl" type="Node" parent="."]
+script = ExtResource( 13 )
+
+[node name="Tokens" type="Node" parent="DataControl"]
+
+[node name="Token" type="Spatial" parent="DataControl/Tokens"]
+script = ExtResource( 11 )
+displayed_name = "Hero"
+position = Vector2( 5, 5 )
+size = Vector3( 1, 1, 0.25 )
+model3D = SubResource( 2 )
+can_walk = true
+
+[node name="MapData" type="Node" parent="DataControl"]
+script = ExtResource( 10 )
 
 [node name="Camera" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 4, 14 )
@@ -104,7 +120,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 4, 14 )
 script = ExtResource( 9 )
 
 [node name="TileBuilder_Square" type="MultiMeshInstance" parent="Display3D"]
-multimesh = SubResource( 1 )
+multimesh = SubResource( 3 )
 script = ExtResource( 2 )
 
 [node name="Click_detection" type="Area" parent="Display3D/TileBuilder_Square"]
@@ -112,23 +128,24 @@ visible = false
 
 [node name="CollisionShape" type="CollisionShape" parent="Display3D/TileBuilder_Square/Click_detection"]
 transform = Transform( 1, 0, 0, 0, 0.25, 0, 0, 0, 1, 0, 0, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 
 [node name="Selector" type="MeshInstance" parent="Display3D"]
 mesh = ExtResource( 5 )
-material/0 = SubResource( 6 )
+material/0 = SubResource( 8 )
 
 [node name="ZoneHighlighter" type="MultiMeshInstance" parent="Display3D"]
-multimesh = SubResource( 9 )
+multimesh = SubResource( 11 )
 script = ExtResource( 6 )
 
-[node name="CharacterDisplayer" type="MultiMeshInstance" parent="Display3D"]
-multimesh = SubResource( 12 )
-script = ExtResource( 7 )
-
 [node name="ArrowDrawer" type="MultiMeshInstance" parent="Display3D"]
-multimesh = SubResource( 14 )
+multimesh = SubResource( 16 )
 script = ExtResource( 8 )
+
+[node name="TokenDisplayer" type="Spatial" parent="Display3D"]
+script = ExtResource( 12 )
+
+[node name="Tween" type="Tween" parent="Display3D/TokenDisplayer"]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_right = 40.0
@@ -181,7 +198,7 @@ __meta__ = {
 }
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 16 )
+environment = SubResource( 18 )
 [connection signal="mouse_tile_event" from="Display3D/TileBuilder_Square" to="." method="_on_TileBuilder_Square_mouse_tile_event"]
 [connection signal="input_event" from="Display3D/TileBuilder_Square/Click_detection" to="Display3D/TileBuilder_Square" method="_on_Area_input_event"]
 [connection signal="pressed" from="VBoxContainer/Button_select" to="." method="_on_Button_select_pressed"]

@@ -1,23 +1,28 @@
-extends GDScript
+extends Node
 
-class_name MapData
+export var X:int = 10
+export var Y:int = 10
+export var MAX_ALTITUDE:int  = 5
+# the generation methode at initialisation
+export(String, "None", \
+	"builder_room", "builder_ruins", \
+	"builder_flatrand", "builder_dicerand", \
+	"builder_exporand", "builder_gradiant") var generation = "builder_ruins"
 
-var X:int
-var Y:int
-var MAX_ALTITUDE:int # MAX_ALTITUDE
-var grid = [] # int[][]
-
-var characters = []
+var grid = [] # int[][] -> elevation
+var tokens = [] # Token List
 
 signal updated_tile_height(coordinate2D)
 var update = false
 var updated_tiles = []
 
-func _init(x,y,z):
+func _ready():
 	randomize()
-	init_grid(x,y)
-	self.MAX_ALTITUDE = z
-
+	init_grid(X,Y)
+	# Generate some elevation using the given generation function
+	if generation and generation != "None" :
+		build_grid(funcref(self, generation))
+	
 func init_grid(size_x:int, size_y:int):
 	self.X = size_x
 	self.Y = size_y
@@ -79,12 +84,12 @@ func builder_exporand(_x:int, _y:int):
 func builder_gradiant(x:int, y:int):
 	return int(float(x+y) / 2 / max(X,Y) * MAX_ALTITUDE)
 
-func add_character(newc : Character):
-	characters.append(newc)
+func add_token(nt : Token) :
+	tokens.append(nt)
 
-func get_selected_items(position):
+func get_tokens_at(coord2D):
 	var items = []
-	for c in characters:
-		if c.position == position:
+	for c in tokens:
+		if c.is_in(coord2D):
 			items.append(c)
 	return items
