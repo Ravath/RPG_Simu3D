@@ -93,3 +93,11 @@ func get_tokens_at(coord2D):
 		if c.is_in(coord2D):
 			items.append(c)
 	return items
+
+func get_blockables_at(coord2D):
+	var items = []
+	for c in tokens:
+		if c.is_in(coord2D) and c.blockable:
+			items.append(c)
+	return items
+		
