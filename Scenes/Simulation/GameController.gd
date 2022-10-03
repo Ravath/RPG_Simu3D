@@ -19,8 +19,9 @@ func _on_updated_tile_height(coordinate2D):
 	$Display3D.update_tile_at(coordinate2D)
 
 func Tile_Left_Click(coordinate):
-	
 	# selection process
+	
+	# Display tile information
 	var display = "Height : "
 	display = display + str(map.get_height(coordinate))
 	var misc = map.get_tokens_at(coordinate)
@@ -30,7 +31,11 @@ func Tile_Left_Click(coordinate):
 		if token.can_walk :
 			found_character = token
 	selected_character = found_character
-	$Panel/Label.set_text(display)
+	$TileInfo/Label.set_text(display)
+	
+	# Display found token actions
+	if selected_character :
+		$TileInfo.set_actions(selected_character)
 	
 	# Tool process
 	if current_tool:
@@ -108,3 +113,6 @@ func _on_Button_upTool_pressed():
 func _on_Button_downTool_pressed():
 	current_tool = MapAction.MapDown.new()
 
+func _on_action_choosed(action):
+	# TODO use command pattern when implemented
+	print("Action selected : " + action.name)

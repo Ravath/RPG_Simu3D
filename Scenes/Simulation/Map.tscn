@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://Scenes/Simulation/Camera.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Simulation/TileBuilder_Square.gd" type="Script" id=2]
@@ -13,6 +13,9 @@
 [ext_resource path="res://Scenes/Simulation/Token.gd" type="Script" id=11]
 [ext_resource path="res://Scenes/Simulation/TokenDisplayer.gd" type="Script" id=12]
 [ext_resource path="res://Scenes/Simulation/SceneData.gd" type="Script" id=13]
+[ext_resource path="res://Scripts/DD3/DD3_CharacterSheet.gd" type="Script" id=14]
+[ext_resource path="res://Scenes/Simulation/TileInfo.gd" type="Script" id=15]
+[ext_resource path="res://Scenes/Simulation/ActionButton.gd" type="Script" id=16]
 
 [sub_resource type="SpatialMaterial" id=18]
 albedo_color = Color( 0.603922, 0.109804, 0.109804, 1 )
@@ -120,6 +123,9 @@ can_walk = true
 [node name="WalkStrategy" type="Node" parent="SceneData/Tokens/Token"]
 script = ExtResource( 7 )
 
+[node name="CharacterSheet" type="Node" parent="SceneData/Tokens/Token"]
+script = ExtResource( 14 )
+
 [node name="Token2" type="Spatial" parent="SceneData/Tokens"]
 script = ExtResource( 11 )
 displayed_name = "Zero"
@@ -189,22 +195,39 @@ margin_right = 48.0
 margin_bottom = 68.0
 text = "Down"
 
-[node name="Panel" type="Panel" parent="."]
+[node name="TileInfo" type="Panel" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -102.0
+script = ExtResource( 15 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Panel"]
+[node name="Label" type="Label" parent="TileInfo"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 text = "display"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ActionButtons" type="VBoxContainer" parent="TileInfo"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -494.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Template" type="Button" parent="TileInfo/ActionButtons"]
+visible = false
+margin_right = 102.0
+margin_bottom = 20.0
+text = "Test"
+script = ExtResource( 16 )
 
 [node name="Coordinate" type="Label" parent="."]
 anchor_top = 1.0
@@ -222,3 +245,5 @@ environment = SubResource( 15 )
 [connection signal="pressed" from="VBoxContainer/Button_select" to="." method="_on_Button_select_pressed"]
 [connection signal="pressed" from="VBoxContainer/Button_upTool" to="." method="_on_Button_upTool_pressed"]
 [connection signal="pressed" from="VBoxContainer/Button_downTool" to="." method="_on_Button_downTool_pressed"]
+[connection signal="on_action_choosed" from="TileInfo/ActionButtons/Template" to="." method="_on_action_choosed"]
+[connection signal="pressed" from="TileInfo/ActionButtons/Template" to="TileInfo/ActionButtons/Template" method="_on_Template_pressed"]

@@ -15,14 +15,16 @@ export(bool) var blockable = true
 export(String, "DD3.5") var system
 var character # Character Sheet
 var movement = WalkStrategy.new()
+var sheet = null
 
 signal moved_at(nav_end) # nav_end : nav_node of the track, starting at the end
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var movement_strategy = get_node("WalkStrategy")
-	if movement_strategy :
-		movement = movement_strategy
+	if has_node("WalkStrategy") :
+		movement = $WalkStrategy
+	if has_node("CharacterSheet") :
+		sheet = $CharacterSheet
 	pass # Replace with function body.
 
 func get_move_points():
@@ -47,3 +49,11 @@ func can_go(map, fs:Vector2, ts:Vector2):
 
 func find_walkable(map):
 	return movement.find_walkable(map, position, get_move_points())
+
+func get_actions():
+	if sheet :
+		var act = sheet.get_actions()
+		for a in act :
+			a.agent = self
+		return act
+	pass

@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "DD3_CharacterSheet",
+"language": "GDScript",
+"path": "res://Scripts/DD3/DD3_CharacterSheet.gd"
+}, {
 "base": "GDScript",
 "class": "MapAction",
 "language": "GDScript",
@@ -30,6 +35,7 @@ _global_script_classes=[ {
 "path": "res://Scripts/Nav_Node.gd"
 } ]
 _global_script_class_icons={
+"DD3_CharacterSheet": "",
 "MapAction": "",
 "Token": "",
 "WalkStrategy": "",
