@@ -36,11 +36,13 @@ func can_go(map, fs:Vector2, ts:Vector2):
 
 	# Check elevation
 	var h = abs(map.grid[fs.x][fs.y] - map.grid[ts.x][ts.y])
-	var height_factor = 1
+	var height_factor = -1
 	for ec in elevation_cost:
 		if h < ec[0]:
 			height_factor = ec[1]
 			break
+	if height_factor == -1:
+		return -1
 	return diagonal * height_factor
 
 func find_walkable(map, origin:Vector2, move_points:int):
