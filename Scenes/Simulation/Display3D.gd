@@ -26,10 +26,10 @@ func set_selection_cursor(pos):
 		map.grid[pos.x][pos.y] * TILE_HEIGHT,
 		pos.y * TILE_WIDTH ) + Vector3.UP * 0.3
 
-func highlight_zone(zone):
+func highlight_zone(zone, color:Color = Color(0x92be6332)):
 	# draw a highlighting for the given tiles
 	# zone : Vector2[] of the tiles to highlight
-	$ZoneHighlighter.set_highlight(map, zone)
+	$ZoneHighlighter.set_highlight(map, zone, color)
 
 func draw_line(start_node) :
 	# draw a pathline starting from the given navigation node nav_node

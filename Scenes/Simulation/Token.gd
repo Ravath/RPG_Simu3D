@@ -7,10 +7,10 @@ export var position : Vector2
 export var size : Vector3 = Vector3(1,1,1)
 export(Mesh) var model3D
 
-# TODO change to a mean to differenciate characters, items, and such
-export(bool) var can_walk = false
+export(int, "FLOOR", "OBJECT", "CHARACTER") \
+	var ObjectType = Enum.ObjectType.CHARACTER # ObjectType
 # prevents movement across him for other token
-export(bool) var blockable = true
+export(bool) var blocking = true
 
 export(String, "DD3.5") var system
 var character # Character Sheet

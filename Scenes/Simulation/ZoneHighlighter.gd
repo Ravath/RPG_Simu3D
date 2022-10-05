@@ -13,7 +13,7 @@ func _ready():
 	H = get_parent().TILE_HEIGHT
 	pass
 
-func set_highlight(map, zone):
+func set_highlight(map, zone, color:Color = Color(0x92be6332)):
 	
 	if zone == null:
 		self.multimesh.instance_count = 0
@@ -27,3 +27,4 @@ func set_highlight(map, zone):
 		var alt = map.get_height(zone[i])
 		position = position.translated(Vector3(zone[i].x * W, (alt+0.5)*H + epsilon, zone[i].y * W))
 		self.multimesh.set_instance_transform(i, position)
+		self.multimesh.set_instance_color(i, color)

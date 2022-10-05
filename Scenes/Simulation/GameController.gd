@@ -64,4 +64,5 @@ func _on_Button_sculptTool_pressed():
 func _on_action_choosed(action):
 	# TODO use command pattern when implemented
 	print("Action selected : " + action.name)
+	set_current_tool(TokenActionCmd.new(self, action))
 

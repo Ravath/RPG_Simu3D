@@ -86,6 +86,7 @@ albedo_color = Color( 0.745098, 0.388235, 0.196078, 0.572549 )
 material = SubResource( 11 )
 
 [sub_resource type="MultiMesh" id=13]
+color_format = 1
 transform_format = 1
 mesh = SubResource( 12 )
 
@@ -118,7 +119,6 @@ displayed_name = "Hero"
 position = Vector2( 5, 5 )
 size = Vector3( 1, 1, 0.25 )
 model3D = SubResource( 2 )
-can_walk = true
 
 [node name="WalkStrategy" type="Node" parent="SceneData/Tokens/Token"]
 script = ExtResource( 7 )
@@ -132,7 +132,6 @@ displayed_name = "Zero"
 position = Vector2( 7, 6 )
 size = Vector3( 1, 1, 0.25 )
 model3D = SubResource( 4 )
-can_walk = true
 
 [node name="MapData" type="Node" parent="SceneData"]
 script = ExtResource( 10 )

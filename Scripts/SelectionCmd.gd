@@ -15,11 +15,10 @@ func left_click_action(coord2D:Vector2):
 	# Display tile information
 	var display = "Height : "
 	display = display + str(map.get_height(coord2D))
-	var misc = map.get_tokens_at(coord2D)
 	var found_character
-	for token in misc :
+	for token in map.get_tokens_at(coord2D) :
 		display = display + "\n" + token.displayed_name
-		if token.can_walk :
+		if token.ObjectType == Enum.ObjectType.CHARACTER :
 			found_character = token
 	gc.get_node("TileInfo/Label").set_text(display)
 	
