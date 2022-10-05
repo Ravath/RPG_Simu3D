@@ -9,15 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "GDScript",
+"class": "ActionCommand",
+"language": "GDScript",
+"path": "res://Scripts/ActionCommand.gd"
+}, {
 "base": "Node",
 "class": "DD3_CharacterSheet",
 "language": "GDScript",
 "path": "res://Scripts/DD3/DD3_CharacterSheet.gd"
 }, {
-"base": "GDScript",
-"class": "MapAction",
+"base": "",
+"class": "SelectionCmd",
 "language": "GDScript",
-"path": "res://Scripts/MapAction.gd"
+"path": "res://Scripts/SelectionCmd.gd"
 }, {
 "base": "Spatial",
 "class": "Token",
@@ -35,8 +40,9 @@ _global_script_classes=[ {
 "path": "res://Scripts/Nav_Node.gd"
 } ]
 _global_script_class_icons={
+"ActionCommand": "",
 "DD3_CharacterSheet": "",
-"MapAction": "",
+"SelectionCmd": "",
 "Token": "",
 "WalkStrategy": "",
 "nav_node": ""
