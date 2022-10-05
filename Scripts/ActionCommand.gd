@@ -3,11 +3,11 @@ extends GDScript
 class_name ActionCommand
 
 class ActionCommandAbst:
-	func left_click_action(coord2D:Vector2):
+	func left_click_action(_coord2D:Vector2):
 		pass
-	func right_click_action(coord2D:Vector2):
+	func right_click_action(_coord2D:Vector2):
 		pass
-	func enters_tile_action(coord2D:Vector2):
+	func enters_tile_action(_coord2D:Vector2):
 		pass
 	func on_remove():
 		pass

@@ -18,7 +18,7 @@ func _ready():
 	H = get_parent().TILE_HEIGHT
 	pass # Replace with function body.
 
-func _process(delta):
+func _process(_delta):
 	if not $Tween.is_active() and steps.size() > 0 :
 		var args = steps.pop_front()
 		var mock_token = args[0].token
@@ -28,10 +28,10 @@ func _process(delta):
 			Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
 		$Tween.start()
 
-func add_tokens(map):
+func add_tokens(_map):
 	# Set the map to use
 	# Adds every token on the map for display
-	self.map = map
+	self.map = _map
 	tokens.clear()
 	
 	for new_token in map.tokens:
@@ -71,10 +71,10 @@ class token_model:
 	var mesh : MeshInstance # Mesh instance of the token
 	var displayer # The parent TokenDisplayer
 	
-	func _init(token, mesh, displayer):
-		self.token = token
-		self.mesh = mesh
-		self.displayer = displayer
+	func _init(_token, _mesh, _displayer):
+		self.token = _token
+		self.mesh = _mesh
+		self.displayer = _displayer
 	
 	func update_position(coord : nav_node):
 		# Schedule the movement tile by tile

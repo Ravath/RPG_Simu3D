@@ -2,7 +2,6 @@ extends Node
 
 class_name WalkStrategy
 
-export(int) var move_points = 4
 # Manhattan neighbours don't include diagonals
 export(bool) var manhattan = false
 # Cost factor  of moving diagonaly (if not Manhattan)
@@ -12,9 +11,6 @@ export(Array) var elevation_cost = [[2,1], [4,2]]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
-
-func get_move_points():
-	return move_points
 
 func can_go(map, fs:Vector2, ts:Vector2):
 #	map as MapData
@@ -49,7 +45,6 @@ func find_walkable(map, origin:Vector2, move_points:int):
 	# Computes the walkable zone for this token
 	var to_search = [nav_node.new(null, origin, 0)]
 	var walkable = [to_search[0]]
-	var searched = []
 	var neighbours = [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
 	if not manhattan :
 		neighbours = [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT,

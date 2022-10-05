@@ -28,7 +28,9 @@ func _ready():
 	pass # Replace with function body.
 
 func get_move_points():
-	return movement.get_move_points()
+	if not sheet:
+		return 0
+	return sheet.get_move_points()
 
 func is_in(coordinate2D : Vector2) :
 	# check if the token is present at the given coordinates
@@ -45,7 +47,7 @@ func go_to(coord : nav_node) :
 	emit_signal("moved_at", coord)
 
 func can_go(map, fs:Vector2, ts:Vector2):
-	return movement.can_go(fs, ts)
+	return movement.can_go(map, fs, ts)
 
 func find_walkable(map):
 	return movement.find_walkable(map, position, get_move_points())

@@ -17,7 +17,7 @@ func _init(gamecontroller, token_action):
 	gc = gamecontroller
 	action = token_action
 
-func left_click_action(coord2D:Vector2):
+func left_click_action(_coord2D:Vector2):
 	if found_target:
 		action.do_function.call_func(found_target)
 

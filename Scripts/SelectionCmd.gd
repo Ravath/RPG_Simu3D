@@ -45,7 +45,7 @@ func on_remove():
 	selected_character = null
 	update_display()
 
-func update_walkable_zone(map) :
+func update_walkable_zone() :
 	walkable = selected_character.find_walkable(map)
 	var zone = []
 	for node in walkable:
@@ -66,7 +66,7 @@ func update_display():
 		# Display found token actions
 		gc.get_node("TileInfo").set_actions(selected_character)
 		# update walkable zone of selected character
-		update_walkable_zone(map)
+		update_walkable_zone()
 		gc.get_display().draw_line(null)
 	else :
 		gc.get_display().highlight_zone(null)

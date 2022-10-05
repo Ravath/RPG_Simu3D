@@ -11,6 +11,7 @@ var Cha = 10
 
 var health_points = 10
 var armor_class = 10
+var VD = 6 # in square
 
 var actions = []
 
@@ -27,6 +28,9 @@ func _ready():
 	att.do_function = funcref(self, "attack")
 	actions.append(att)
 	pass # Replace with function body.
+
+func get_move_points():
+	return VD
 
 func get_actions():
 	return actions
