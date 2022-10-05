@@ -18,13 +18,13 @@ func _on_updated_tile_height(coordinate2D):
 	# when the map has been changed, update the 3D model
 	$Display3D.update_tile_at(coordinate2D)
 
-func Tile_Left_Click(coordinate):
+func Tile_Left_Click(coordinate2D):
 	# selection process
 	
 	# Display tile information
 	var display = "Height : "
-	display = display + str(map.get_height(coordinate))
-	var misc = map.get_tokens_at(coordinate)
+	display = display + str(map.get_height(coordinate2D))
+	var misc = map.get_tokens_at(coordinate2D)
 	var found_character
 	for token in misc :
 		display = display + "\n" + token.displayed_name
@@ -39,7 +39,7 @@ func Tile_Left_Click(coordinate):
 	
 	# Tool process
 	if current_tool:
-		current_tool.action(map, coordinate.x, coordinate.y)
+		current_tool.left_click_action(map, coordinate2D)
 	
 	# update walkable zone of selected character
 	if selected_character:
@@ -54,11 +54,14 @@ func Tile_Right_Click(coordinate2D):
 		var end_node = find_nav_node(coordinate2D)
 		if end_node:
 			selected_character.go_to(end_node)
-			$Display3D.update_tokens()
 			# redo the selection stuff
 			Tile_Left_Click(coordinate2D)
 #			update_walkable_zone(selected_character)
 			$Display3D.set_selection_cursor(coordinate2D)
+
+	# Tool process
+	if current_tool:
+		current_tool.right_click_action(map, coordinate2D)
 	
 func Tile_Mouse_Enters(coordinate2D):
 	$Coordinate.set_text(str(coordinate2D))
@@ -107,12 +110,10 @@ func _on_TileBuilder_Square_mouse_tile_event(event, coordinate2D):
 func _on_Button_select_pressed():
 	current_tool = null
 
-func _on_Button_upTool_pressed():
-	current_tool = MapAction.MapUp.new()
-
-func _on_Button_downTool_pressed():
-	current_tool = MapAction.MapDown.new()
+func _on_Button_sculptTool_pressed():
+	current_tool = MapAction.MapSculpt.new()
 
 func _on_action_choosed(action):
 	# TODO use command pattern when implemented
 	print("Action selected : " + action.name)
+

@@ -18,11 +18,7 @@ func set_map(new_map):
 
 func update_tile_at(coordinate2D):
 	$TileBuilder_Square.update_tile_at(map, coordinate2D)
-#	$TokenDisplayer.update_tokens(map)
-	
-func update_tokens():
-#	$TokenDisplayer.update_tokens(map)
-	pass
+	$TokenDisplayer.update_tokens_at(coordinate2D)
 
 func set_selection_cursor(pos):
 	$Selector.transform.origin = Vector3(

@@ -7,7 +7,7 @@ const C_H = 4 # Character height in multiple of H
 #TODO Character Height is a room builder parameter
 
 var map
-var tokens : Array # Token[]
+var tokens : Array # token_model[]
 
 # steps for moving a token sequentially during process
 var steps = []	# each step : [ object, destination2D ]
@@ -59,6 +59,11 @@ func get_mesh_transform(token : Token) :
 	var scale = Transform()
 	scale = scale.scaled(Vector3(token.size.x,token.size.z, token.size.y))
 	return position * scale
+
+func update_tokens_at(coordinate2D):
+	for tm in tokens:
+		if tm.token.is_in(coordinate2D):
+			self.steps.append([tm,coordinate2D])
 
 class token_model:
 	# Custom data for managing the tokens to display
