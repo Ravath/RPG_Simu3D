@@ -35,6 +35,13 @@ func Tile_Mouse_Enters(coordinate2D):
 
 func _on_TileBuilder_Square_mouse_tile_event(event, coordinate2D):
 	
+	# Stupid, but occurs sometimes
+	if not map.contains(coordinate2D):
+		# TODO Maybe put this in the mouse event raiser (tileBuilder)
+		# TODO Maybe use a log manager
+		print("Error : mouse event detected at "+str(coordinate2D))
+		return
+	
 	# Do mouse action on LEFT_CLICK
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed :
 		Tile_Left_Click(coordinate2D)

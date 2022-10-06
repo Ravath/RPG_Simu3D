@@ -51,6 +51,10 @@ func set_height(x:int, y:int, new_alt:int):
 func get_height(var pos):
 	return grid[pos.x][pos.y]
 
+func contains(coord2D):
+	return coord2D.x>=0 and coord2D.y>=0 \
+		and coord2D.x <X and coord2D.y <Y
+
 func build_grid(builder_function):
 	# build a map with random altitudes
 	for x in range(X):
