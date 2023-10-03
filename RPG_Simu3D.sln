@@ -1,12 +1,16 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPG_Simu3D", "RPG_Simu3D.csproj", "{0C28528D-ED5F-4C7C-8A09-BDFFB42859CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MightyGm2", "..\MightyGm2\MightyGm2.csproj", "{4105D56F-2676-4940-A408-7145DFD13573}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-	Debug|Any CPU = Debug|Any CPU
-	ExportDebug|Any CPU = ExportDebug|Any CPU
-	ExportRelease|Any CPU = ExportRelease|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		ExportDebug|Any CPU = ExportDebug|Any CPU
+		ExportRelease|Any CPU = ExportRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0C28528D-ED5F-4C7C-8A09-BDFFB42859CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -15,5 +19,17 @@ Global
 		{0C28528D-ED5F-4C7C-8A09-BDFFB42859CA}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
 		{0C28528D-ED5F-4C7C-8A09-BDFFB42859CA}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
 		{0C28528D-ED5F-4C7C-8A09-BDFFB42859CA}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{4105D56F-2676-4940-A408-7145DFD13573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4105D56F-2676-4940-A408-7145DFD13573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4105D56F-2676-4940-A408-7145DFD13573}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{4105D56F-2676-4940-A408-7145DFD13573}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{4105D56F-2676-4940-A408-7145DFD13573}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{4105D56F-2676-4940-A408-7145DFD13573}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1335F1A5-DA86-42CB-ADF5-F1F98E634C40}
 	EndGlobalSection
 EndGlobal

@@ -58,6 +58,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\IAction.cs" />
+    <Compile Include="Core\IAgent.cs" />
+    <Compile Include="Core\IFilter.cs" />
+    <Compile Include="Core\Value.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
