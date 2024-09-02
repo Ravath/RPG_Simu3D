@@ -1,4 +1,4 @@
-extends MultiMeshInstance
+extends MultiMeshInstance3D
 
 
 # The tile dimensions
@@ -23,8 +23,8 @@ func set_highlight(map, zone, color:Color = Color(0x92be6332)):
 	self.multimesh.instance_count = zone.size()
 	
 	for i in zone.size():
-		var position = Transform()
+		var highlight_position = Transform3D()
 		var alt = map.get_height(zone[i])
-		position = position.translated(Vector3(zone[i].x * W, (alt+0.5)*H + epsilon, zone[i].y * W))
-		self.multimesh.set_instance_transform(i, position)
+		highlight_position = highlight_position.translated(Vector3(zone[i].x * W, (alt+0.5)*H + epsilon, zone[i].y * W))
+		self.multimesh.set_instance_transform(i, highlight_position)
 		self.multimesh.set_instance_color(i, color)

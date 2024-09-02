@@ -3,10 +3,10 @@ extends Node
 class_name WalkStrategy
 
 # Manhattan neighbours don't include diagonals
-export(bool) var manhattan = false
+@export var manhattan = false
 # Cost factor  of moving diagonaly (if not Manhattan)
-export(float) var diagonal_cost = 1.5
-export(Array) var elevation_cost = [[2,1], [4,2]]
+@export var diagonal_cost = 1.5
+@export var elevation_cost = [[2,1], [4,2]]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

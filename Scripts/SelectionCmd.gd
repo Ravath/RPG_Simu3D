@@ -22,7 +22,7 @@ func left_click_action(coord2D:Vector2):
 			found_character = token
 	gc.get_node("TileInfo/Label").set_text(display)
 	
-	# Manage characte selection
+	# Manage character selection
 	selected_character = found_character
 	update_display()
 

@@ -1,10 +1,10 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://8kwxltptqb4u"]
 
-[ext_resource path="res://Scenes/Simulation/Camera.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://Scenes/Simulation/Camera.gd" id="1"]
 
-[node name="CameraFocus" type="Position3D"]
-script = ExtResource( 1 )
+[node name="CameraFocus" type="Marker3D"]
+script = ExtResource("1")
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.890753, 0.454488, 0, -0.454488, 0.890753, 0, 4.17976, 6.14338 )
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.890753, 0.454488, 0, -0.454488, 0.890753, 0, 4.17976, 6.14338)
 current = true

@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 var map	# the map to display
 var current_tool = null	# current tool used on click (null for selection only)
@@ -11,7 +11,7 @@ func _ready():
 
 	# give map to display module
 	get_display().set_map(map)
-	map.connect("updated_tile_height", self, "_on_updated_tile_height")
+	map.updated_tile_height.connect(self._on_updated_tile_height)
 
 func get_display():
 	return $Display3D
@@ -43,11 +43,11 @@ func _on_TileBuilder_Square_mouse_tile_event(event, coordinate2D):
 		return
 	
 	# Do mouse action on LEFT_CLICK
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed :
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed :
 		Tile_Left_Click(coordinate2D)
 		
 	# Move the selected character on RIGHT_CLICK
-	elif event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.pressed :
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed :
 		Tile_Right_Click(coordinate2D)
 	
 	# update the DisplayPanels with the tile info of the one under the mouse

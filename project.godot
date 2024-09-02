@@ -6,65 +6,18 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
-
-_global_script_classes=[ {
-"base": "GDScript",
-"class": "ActionCommand",
-"language": "GDScript",
-"path": "res://Scripts/ActionCommand.gd"
-}, {
-"base": "Node",
-"class": "DD3_CharacterSheet",
-"language": "GDScript",
-"path": "res://Scripts/DD3/DD3_CharacterSheet.gd"
-}, {
-"base": "Node",
-"class": "Enum",
-"language": "GDScript",
-"path": "res://Scripts/Enum.gd"
-}, {
-"base": "",
-"class": "SelectionCmd",
-"language": "GDScript",
-"path": "res://Scripts/SelectionCmd.gd"
-}, {
-"base": "Spatial",
-"class": "Token",
-"language": "GDScript",
-"path": "res://Scenes/Simulation/Token.gd"
-}, {
-"base": "",
-"class": "TokenActionCmd",
-"language": "GDScript",
-"path": "res://Scripts/TokenActionCmd.gd"
-}, {
-"base": "Node",
-"class": "WalkStrategy",
-"language": "GDScript",
-"path": "res://Scripts/WalkStrategy.gd"
-}, {
-"base": "Node",
-"class": "nav_node",
-"language": "GDScript",
-"path": "res://Scripts/Nav_Node.gd"
-} ]
-_global_script_class_icons={
-"ActionCommand": "",
-"DD3_CharacterSheet": "",
-"Enum": "",
-"SelectionCmd": "",
-"Token": "",
-"TokenActionCmd": "",
-"WalkStrategy": "",
-"nav_node": ""
-}
+config_version=5
 
 [application]
 
 config/name="RPG_Simu3D"
 run/main_scene="res://Scenes/Simulation/Map.tscn"
+config/features=PackedStringArray("4.2", "C#")
 config/icon="res://icon.png"
+
+[dotnet]
+
+project/assembly_name="RPG_Simu3D"
 
 [rendering]
 

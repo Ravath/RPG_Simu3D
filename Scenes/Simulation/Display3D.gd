@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 
 const TILE_WIDTH = 2	# size of a 3D model tile

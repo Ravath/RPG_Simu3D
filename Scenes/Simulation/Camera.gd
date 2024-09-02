@@ -1,4 +1,4 @@
-extends Position3D
+extends Marker3D
 
 var CAMERA_SPEED = 0.2
 
@@ -40,10 +40,10 @@ func _process(_delta):
 func _input(event):
 	# zoom
 	if event is InputEventMouseButton:
-		if event.button_index == BUTTON_WHEEL_UP:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			var strafe = - CAMERA_SPEED * $Camera.transform.basis.z
 			$Camera.transform.origin += strafe
-		if event.button_index == BUTTON_WHEEL_DOWN:
+		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			var strafe = + CAMERA_SPEED * $Camera.transform.basis.z
 			$Camera.transform.origin += strafe
 	# TODO maybe change camera orientation when dragging with mouse_wheel

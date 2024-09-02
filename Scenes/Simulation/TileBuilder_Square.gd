@@ -1,4 +1,4 @@
-extends MultiMeshInstance
+extends MultiMeshInstance3D
 # A 3D model of a map
 
 var TILE_WIDTH
@@ -20,9 +20,9 @@ func update_grid(map):
 		for y in range(map.Y):
 			# place every tiles
 			for z in range(map.grid[x][y] + 1):
-				var position = Transform()
-				position = position.translated(Vector3(TILE_WIDTH*x, TILE_HEIGHT*z, TILE_WIDTH*y))
-				self.multimesh.set_instance_transform(x*map.MAX_ALTITUDE*map.Y + y*map.MAX_ALTITUDE + z, position)
+				var translation = Transform3D()
+				translation = translation.translated(Vector3(TILE_WIDTH*x, TILE_HEIGHT*z, TILE_WIDTH*y))
+				self.multimesh.set_instance_transform(x*map.MAX_ALTITUDE*map.Y + y*map.MAX_ALTITUDE + z, translation)
 			# place the click management
 			var col = $Click_detection.duplicate()
 			col.visible = true
@@ -35,10 +35,10 @@ func update_tile_at(map, coordinate2D):
 	var v = coordinate2D as Vector2
 	# place tiles
 	for i in range(map.MAX_ALTITUDE):
-		var position = Transform()
+		var translation = Transform3D()
 		if i <= map.grid[v.x][v.y]:
-			position = position.translated(Vector3(TILE_WIDTH*v.x, TILE_HEIGHT*i, TILE_WIDTH*v.y))
-		self.multimesh.set_instance_transform(v.x*map.MAX_ALTITUDE*map.Y + v.y*map.MAX_ALTITUDE + i, position)
+			translation = translation.translated(Vector3(TILE_WIDTH*v.x, TILE_HEIGHT*i, TILE_WIDTH*v.y))
+		self.multimesh.set_instance_transform(v.x*map.MAX_ALTITUDE*map.Y + v.y*map.MAX_ALTITUDE + i, translation)
 	# update click_manager
 	update_click_manager_at(map, v.x, v.y, map.grid[v.x][v.y])
 	
@@ -54,15 +54,15 @@ func _on_Area_input_event(_camera, event, click_position, click_normal, _shape_i
 	# when a tile is clicked_on, deduce the grid coordinates
 	# then execute the current tool and selection process
 	var gp = pos_to_grid(click_position - 0.05 * click_normal)
-	emit_signal("mouse_tile_event", event, gp)
+	mouse_tile_event.emit(event, gp)
 
-func pos_to_grid(position) :
+func pos_to_grid(global_position2d) :
 	# convert a global position2D into a grid coordinate2D
 	# This is an old (and probably wrong) formula with the scale taken into account, in case of future need
-#	var x = (((position.x - self.transform.origin.x) / self.scale.x) + TILE_WIDTH/2) / TILE_WIDTH
-#	var y = (((position.z - self.transform.origin.z) / self.scale.z) + TILE_WIDTH/2) / TILE_WIDTH
-	var x = ((position.x - self.transform.origin.x) + TILE_WIDTH/2) / TILE_WIDTH
-	var y = ((position.z - self.transform.origin.z) + TILE_WIDTH/2) / TILE_WIDTH
+#	var x = (((global_position.x - self.transform.origin.x) / self.scale.x) + TILE_WIDTH/2) / TILE_WIDTH
+#	var y = (((global_position.z - self.transform.origin.z) / self.scale.z) + TILE_WIDTH/2) / TILE_WIDTH
+	var x = ((global_position2d.x - self.transform.origin.x) + TILE_WIDTH/2) / TILE_WIDTH
+	var y = ((global_position2d.z - self.transform.origin.z) + TILE_WIDTH/2) / TILE_WIDTH
 	return Vector2(int(x),int(y))
 
 func grid_to_pos(coordinate):

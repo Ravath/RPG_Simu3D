@@ -25,7 +25,7 @@ func _ready():
 	att.name = "Attack"
 	att.target_type = Enum.ObjectType.CHARACTER
 	att.distance = 1.5
-	att.do_function = funcref(self, "attack")
+	att.do_function = Callable(self, "attack")
 	actions.append(att)
 	pass # Replace with function body.
 

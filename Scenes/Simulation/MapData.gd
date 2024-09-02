@@ -1,13 +1,13 @@
 extends Node
 
-export var X:int = 10
-export var Y:int = 10
-export var MAX_ALTITUDE:int  = 5
+@export var X:int = 10
+@export var Y:int = 10
+@export var MAX_ALTITUDE:int  = 5
 # the generation methode at initialisation
-export(String, "None", \
+@export_enum("None", \
 	"builder_room", "builder_ruins", \
 	"builder_flatrand", "builder_dicerand", \
-	"builder_exporand", "builder_gradiant") var generation = "builder_ruins"
+	"builder_exporand", "builder_gradiant") var generation:String = "builder_ruins"
 
 var grid = [] # int[][] -> elevation
 var tokens = [] # Token List
@@ -21,7 +21,7 @@ func _ready():
 	init_grid(X,Y)
 	# Generate some elevation using the given generation function
 	if generation and generation != "None" :
-		build_grid(funcref(self, generation))
+		build_grid(Callable(self, generation))
 	
 func init_grid(size_x:int, size_y:int):
 	self.X = size_x
@@ -48,7 +48,7 @@ func set_height(x:int, y:int, new_alt:int):
 	update = true
 	updated_tiles.append(Vector2(x,y))
 
-func get_height(var pos):
+func get_height(pos):
 	return grid[pos.x][pos.y]
 
 func contains(coord2D):
@@ -59,7 +59,7 @@ func build_grid(builder_function):
 	# build a map with random altitudes
 	for x in range(X):
 		for y in range(Y):
-			var alt = builder_function.call_func(x,y)
+			var alt = builder_function.call(x,y)
 			grid[x][y] = alt
 
 func builder_ruins(x:int, y:int):

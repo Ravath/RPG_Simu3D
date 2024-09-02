@@ -28,9 +28,9 @@ func enters_tile_action(coord2D:Vector2):
 			found_target = token
 	
 	if found_target :
-		gc.get_display().highlight_zone([coord2D], Color.green)
+		gc.get_display().highlight_zone([coord2D], Color.GREEN)
 	else:
-		gc.get_display().highlight_zone([coord2D], Color.green)
+		gc.get_display().highlight_zone([coord2D], Color.GREEN)
 	
 	
 func on_remove():

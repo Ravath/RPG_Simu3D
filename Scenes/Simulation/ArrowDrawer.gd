@@ -1,4 +1,4 @@
-extends MultiMeshInstance
+extends MultiMeshInstance3D
 
 
 # The tile dimensions
@@ -36,10 +36,10 @@ func draw_line(map, start_node) :
 	c = start_node
 	count = 0
 	while c :
-		var rotation = Transform()
-		var position = Transform()
+		var apply_rotation = Transform3D()
+		var apply_translation = Transform3D()
 		var alt = map.get_height(c.position)
-		position.origin = Vector3(c.position.x * W, (alt+0.5)*H + epsilon, c.position.y * W)
+		apply_translation.origin = Vector3(c.position.x * W, (alt+0.5)*H + epsilon, c.position.y * W)
 		
 		# do rotation
 		if c.previous :
@@ -50,9 +50,9 @@ func draw_line(map, start_node) :
 				if c.position.y < c.previous.position.y and c.position.x < c.previous.position.x \
 				or c.position.y > c.previous.position.y and c.position.x > c.previous.position.x :
 					angle = - angle
-				rotation = rotation.rotated(Vector3.UP , angle)
+				apply_rotation = apply_rotation.rotated(Vector3.UP , angle)
 			
-		self.multimesh.set_instance_transform(count, position*rotation)
+		self.multimesh.set_instance_transform(count, apply_translation*apply_rotation)
 		
 		count += 1
 		c = c.previous
